@@ -29,15 +29,27 @@ module Octopress
       end
     end
 
+    def stardateize(date)
+      date = datetime(date)
+      "Stardate #{stardate(date.strftime('%s').to_f)}"
+    end
+
+    def stardate(seconds)
+      "%5.2f" % (seconds / 86400 + 40587.5)
+    end
+
     # Formats date either as ordinal or by given date format
     # Adds %o as ordinal representation of the day
     def format_date(date, format)
       date = datetime(date)
       if format.nil? || format.empty? || format == "ordinal"
         date_formatted = ordinalize(date)
+      elsif format == "stardate"
+        date_formatted = stardateize(date)
       else
         date_formatted = date.strftime(format)
         date_formatted.gsub!(/%o/, ordinal(date.strftime('%e').to_i))
+        date_formatted.gsub!(/%J/, stardate(date.strftime('%s').to_f))
       end
       date_formatted
     end
