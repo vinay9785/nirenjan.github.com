@@ -4,7 +4,7 @@
   <title><![CDATA[Nirenjan's Space]]></title>
   <link href="http://nirenjan.github.com/atom.xml" rel="self"/>
   <link href="http://nirenjan.github.com/"/>
-  <updated>2013-02-09T19:33:42-08:00</updated>
+  <updated>2013-02-10T08:07:30-08:00</updated>
   <id>http://nirenjan.github.com/</id>
   <author>
     <name><![CDATA[Nirenjan Krishnan]]></name>
@@ -61,7 +61,7 @@ display the current time as 56333.58 (Feb 9th, 2013, 17:59 PST).</p>
 as this is the way (or at least the one I know of), to use printf style format
 specifiers without actually using printf&#8217;s. The <code>t.strftime{"%s"}</code> returns the
 current Unix timestamp, and divinding by 86400 gives us the number of days since
-the Unix epoch. The last portion, <code>"+ 40587.5"</code>, gives us the number to add to
+the Unix epoch. The last portion, <code>+ 40587.5</code>, gives us the number to add to
 get the current Julian day, or fraction thereof. You see, 2440587.5 is the
 Julian day timestamp at midnight GMT on January 1st, 1970. So, by adding the
 number of days since the epoch to 40587.5, I get exactly what I want, the
