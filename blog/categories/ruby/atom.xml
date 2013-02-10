@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ruby | Nirenjan's Space]]></title>
+  <link href="http://nirenjan.github.com/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://nirenjan.github.com/"/>
+  <updated>2013-02-09T19:33:42-08:00</updated>
+  <id>http://nirenjan.github.com/</id>
+  <author>
+    <name><![CDATA[Nirenjan Krishnan]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Stardates]]></title>
+    <link href="http://nirenjan.github.com/blog/2013/02/09/stardates/"/>
+    <updated>2013-02-09T19:41:00-08:00</updated>
+    <id>http://nirenjan.github.com/blog/2013/02/09/stardates</id>
+    <content type="html"><![CDATA[<p>Stardates are common usage in the Star Trek universe. You'd easily hear Captain
+Picard talking in the intro scene, "Captain's log, stardate 41325.9". These
+combinations of numbers are meant to give the viewer a sense of the future,
+without explicitly stating the exact timeframe in which the show occurs. Of
+course, we know that Star Trek: The Next Generation is set in the 24th century,
+but that's beside the point.</p>
+
+<!-- more -->
+
+
+<p>Here, I'm going to talk about the stardates shown in the header of the posts.
+These are meant to give me some semblance of futuristic activity, however, they
+are tied to very real and very current dates. In the field of astronomy,
+observations are recorded using a number format similar to stardates, however,
+these are called <a href="http://en.wikipedia.org/wiki/Julian_day">Julian days</a>. In
+short, like Unix time is the number of seconds since the Unix epoch on January
+1st, 1970, midnight GMT, Julian days are the number of days since the epoch at
+noon GMT on January 1st, 4713 BC in the <a href="http://en.wikipedia.org/wiki/Proleptic_Julian_calendar">Proleptic Gregorian
+Calendar</a>. The current
+Julian day, as of this writing is 2456333. Most observations record the time
+with an additional degree of precision by adding a fractional portion of the
+day. So, for example, it's now 2456333.6.</p>
+
+<p>Obviously, one could take this and extend it ad infinitum, but we're not going
+to do that. For the purpose of this blog, it's quite sufficient to maintain time
+precision of about a quarter hour. In addition, it's not necessary to display
+the full Julian day, but truncate the most significant two digits. That, is, I'd
+display the current time as 56333.58 (Feb 9th, 2013, 17:59 PST).</p>
+
+<p>This is easily done in Ruby with the following code:
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Stardate  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">t</span> <span class="o">=</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;%5.2f&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%s&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">86400</span> <span class="o">+</span> <span class="mi">40587</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The <code>"%5.2f"</code> syntax should be straightforward to anybody using Python or Ruby,
+as this is the way (or at least the one I know of), to use printf style format
+specifiers without actually using printf's. The <code>t.strftime{"%s"}</code> returns the
+current Unix timestamp, and divinding by 86400 gives us the number of days since
+the Unix epoch. The last portion, <code>"+ 40587.5"</code>, gives us the number to add to
+get the current Julian day, or fraction thereof. You see, 2440587.5 is the
+Julian day timestamp at midnight GMT on January 1st, 1970. So, by adding the
+number of days since the epoch to 40587.5, I get exactly what I want, the
+current Julian day (minus 2400000, of course).</p>
+
+<p>The astute observer would see that this is not quite perfect, I'd get a rollover
+when the counter reaches 99999.99. Sure, but I'm not too worried about that. The
+rollover will happen on August 31st, 2132 at noon GMT (less about 7 minutes,
+accounting for the rounding up by the printf function), which is well beyond my
+lifetime, and by which point, we may even be using some other form of
+timekeeping other than the Julian calendar.</p>
+
+<p>The even more astute observer would notice that this calculation doesn't account
+for leap seconds. Again, I don't care about them. The rounding off means that a
+second here or there doesn't matter; each 100th of a day is 864 seconds, or 14
+minutes, and 24 seconds (just under a quarter of an hour).</p>
+
+<p>Now, how do we get this to work in Octopress? The syntax is straightforward, we
+can tweak the date plugin as shown below.
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Date plugin changes  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gh">diff --git a/plugins/date.rb b/plugins/date.rb</span>
+</span><span class='line'><span class="gh">index 49fb79a..af660df 100644</span>
+</span><span class='line'><span class="gd">--- a/plugins/date.rb</span>
+</span><span class='line'><span class="gi">+++ b/plugins/date.rb</span>
+</span><span class='line'><span class="gu">@@ -29,15 +29,27 @@ module Octopress&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;   end
+</span><span class='line'> end
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt; def stardateize(date)&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;   date = datetime(date)&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;   &quot;Stardate #{stardate(date.strftime(&#39;%s&#39;).to_f)}&quot;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt; end
+</span><span class='line'><span class="gi">+&lt;/li&gt;</span>
+</span><span class='line'>&lt;li&gt; def stardate(seconds)&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;   &quot;%5.2f&quot; % (seconds / 86400 + 40587.5)&lt;/li&gt;
+</span><span class='line'>&lt;li&gt; end
+</span><span class='line'><span class="gi">+</span>
+</span><span class='line'> # Formats date either as ordinal or by given date format
+</span><span class='line'> # Adds %o as ordinal representation of the day
+</span><span class='line'> def format_date(date, format)
+</span><span class='line'>   date = datetime(date)
+</span><span class='line'>   if format.nil? || format.empty? || format == &quot;ordinal&quot;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt; date_formatted = ordinalize(date)
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;   elsif format == &quot;stardate&quot;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;pre&gt;&lt;code&gt; date_formatted = stardateize(date)
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>   else
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt; date_formatted = date.strftime(format)
+</span><span class='line'> date_formatted.gsub!(/%o/, ordinal(date.strftime(&#39;%e&#39;).to_i))
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;pre&gt;&lt;code&gt; date_formatted.gsub!(/%J/, stardate(date.strftime(&#39;%s&#39;).to_f))
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;   end
+</span><span class='line'>   date_formatted
+</span><span class='line'> end
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ul>
+
+
+<p>Like the original date plugin uses the <code>%o</code> syntax to generate ordinal
+representations of days, the stardate representation uses the <code>%J</code> syntax. Since
+neither of these are in use by strftime, we can repurpose them for our own use.</p>
+]]></content>
+  </entry>
+  
+</feed>

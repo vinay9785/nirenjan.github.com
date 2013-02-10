@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Stardates - Nirenjan's Space</title>
+  <meta name="author" content="Nirenjan Krishnan">
+
+  
+  <meta name="description" content="Stardates are common usage in the Star Trek universe. You&#8217;d easily hear Captain
+Picard talking in the intro scene, &#8220;Captain&#8217;s log, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nirenjan.github.com/blog/2013/02/09/stardates/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Nirenjan's Space" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Nirenjan's Space</a></h1>
+  
+    <h2>Dabblings in code, food and tech</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:nirenjan.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Stardates</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-02-09T19:41:00-08:00" pubdate data-updated="true">Sat, 9<span>th</span> Feb 2013, 19:41 (Stardate 56333.65)</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Stardates are common usage in the Star Trek universe. You&#8217;d easily hear Captain
+Picard talking in the intro scene, &#8220;Captain&#8217;s log, stardate 41325.9&#8221;. These
+combinations of numbers are meant to give the viewer a sense of the future,
+without explicitly stating the exact timeframe in which the show occurs. Of
+course, we know that Star Trek: The Next Generation is set in the 24th century,
+but that&#8217;s beside the point.</p>
+
+<!-- more -->
+
+
+<p>Here, I&#8217;m going to talk about the stardates shown in the header of the posts.
+These are meant to give me some semblance of futuristic activity, however, they
+are tied to very real and very current dates. In the field of astronomy,
+observations are recorded using a number format similar to stardates, however,
+these are called <a href="http://en.wikipedia.org/wiki/Julian_day">Julian days</a>. In
+short, like Unix time is the number of seconds since the Unix epoch on January
+1st, 1970, midnight GMT, Julian days are the number of days since the epoch at
+noon GMT on January 1st, 4713 BC in the <a href="http://en.wikipedia.org/wiki/Proleptic_Julian_calendar">Proleptic Gregorian
+Calendar</a>. The current
+Julian day, as of this writing is 2456333. Most observations record the time
+with an additional degree of precision by adding a fractional portion of the
+day. So, for example, it&#8217;s now 2456333.6.</p>
+
+<p>Obviously, one could take this and extend it ad infinitum, but we&#8217;re not going
+to do that. For the purpose of this blog, it&#8217;s quite sufficient to maintain time
+precision of about a quarter hour. In addition, it&#8217;s not necessary to display
+the full Julian day, but truncate the most significant two digits. That, is, I&#8217;d
+display the current time as 56333.58 (Feb 9th, 2013, 17:59 PST).</p>
+
+<p>This is easily done in Ruby with the following code:</p>
+
+<figure class='code'><figcaption><span>Stardate  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">t</span> <span class="o">=</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;%5.2f&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%s&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">86400</span> <span class="o">+</span> <span class="mi">40587</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>"%5.2f"</code> syntax should be straightforward to anybody using Python or Ruby,
+as this is the way (or at least the one I know of), to use printf style format
+specifiers without actually using printf&#8217;s. The <code>t.strftime{"%s"}</code> returns the
+current Unix timestamp, and divinding by 86400 gives us the number of days since
+the Unix epoch. The last portion, <code>"+ 40587.5"</code>, gives us the number to add to
+get the current Julian day, or fraction thereof. You see, 2440587.5 is the
+Julian day timestamp at midnight GMT on January 1st, 1970. So, by adding the
+number of days since the epoch to 40587.5, I get exactly what I want, the
+current Julian day (minus 2400000, of course).</p>
+
+<p>The astute observer would see that this is not quite perfect, I&#8217;d get a rollover
+when the counter reaches 99999.99. Sure, but I&#8217;m not too worried about that. The
+rollover will happen on August 31st, 2132 at noon GMT (less about 7 minutes,
+accounting for the rounding up by the printf function), which is well beyond my
+lifetime, and by which point, we may even be using some other form of
+timekeeping other than the Julian calendar.</p>
+
+<p>The even more astute observer would notice that this calculation doesn&#8217;t account
+for leap seconds. Again, I don&#8217;t care about them. The rounding off means that a
+second here or there doesn&#8217;t matter; each 100th of a day is 864 seconds, or 14
+minutes, and 24 seconds (just under a quarter of an hour).</p>
+
+<p>Now, how do we get this to work in Octopress? The syntax is straightforward, we
+can tweak the date plugin as shown below.</p>
+
+<figure class='code'><figcaption><span>Date plugin changes  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gh">diff --git a/plugins/date.rb b/plugins/date.rb</span>
+</span><span class='line'><span class="gh">index 49fb79a..af660df 100644</span>
+</span><span class='line'><span class="gd">--- a/plugins/date.rb</span>
+</span><span class='line'><span class="gi">+++ b/plugins/date.rb</span>
+</span><span class='line'><span class="gu">@@ -29,15 +29,27 @@ module Octopress</span>
+</span><span class='line'>       end
+</span><span class='line'>     end
+</span><span class='line'>
+</span><span class='line'><span class="gi">+    def stardateize(date)</span>
+</span><span class='line'><span class="gi">+      date = datetime(date)</span>
+</span><span class='line'><span class="gi">+      &quot;Stardate #{stardate(date.strftime(&#39;%s&#39;).to_f)}&quot;</span>
+</span><span class='line'><span class="gi">+    end</span>
+</span><span class='line'><span class="gi">+</span>
+</span><span class='line'><span class="gi">+    def stardate(seconds)</span>
+</span><span class='line'><span class="gi">+      &quot;%5.2f&quot; % (seconds / 86400 + 40587.5)</span>
+</span><span class='line'><span class="gi">+    end</span>
+</span><span class='line'><span class="gi">+</span>
+</span><span class='line'>     # Formats date either as ordinal or by given date format
+</span><span class='line'>     # Adds %o as ordinal representation of the day
+</span><span class='line'>     def format_date(date, format)
+</span><span class='line'>       date = datetime(date)
+</span><span class='line'>       if format.nil? || format.empty? || format == &quot;ordinal&quot;
+</span><span class='line'>         date_formatted = ordinalize(date)
+</span><span class='line'><span class="gi">+      elsif format == &quot;stardate&quot;</span>
+</span><span class='line'><span class="gi">+        date_formatted = stardateize(date)</span>
+</span><span class='line'>       else
+</span><span class='line'>         date_formatted = date.strftime(format)
+</span><span class='line'>         date_formatted.gsub!(/%o/, ordinal(date.strftime(&#39;%e&#39;).to_i))
+</span><span class='line'><span class="gi">+        date_formatted.gsub!(/%J/, stardate(date.strftime(&#39;%s&#39;).to_f))</span>
+</span><span class='line'>       end
+</span><span class='line'>       date_formatted
+</span><span class='line'>     end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Like the original date plugin uses the <code>%o</code> syntax to generate ordinal
+representations of days, the stardate representation uses the <code>%J</code> syntax. Since
+neither of these are in use by strftime, we can repurpose them for our own use.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Nirenjan Krishnan</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-02-09T19:41:00-08:00" pubdate data-updated="true">Sat, 9<span>th</span> Feb 2013, 19:41 (Stardate 56333.65)</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/code/'>Code</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nirenjan.github.com/blog/2013/02/09/stardates/" data-via="" data-counturl="http://nirenjan.github.com/blog/2013/02/09/stardates/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/stardates/">Stardates</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/nirenjan">@nirenjan</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'nirenjan',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Nirenjan Krishnan -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
