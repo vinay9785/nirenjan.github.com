@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Nirenjan's Space</title>
+  <title>Semantic Versioning - Nirenjan's Space</title>
   <meta name="author" content="Nirenjan Krishnan">
 
   
@@ -19,7 +19,7 @@ not make any sense out of it. Take package managers for instance; you &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://nirenjan.github.com/">
+  <link rel="canonical" href="http://nirenjan.github.com/blog/2013/06/29/semantic-versioning/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -64,15 +64,12 @@ not make any sense out of it. Take package managers for instance; you &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/06/29/semantic-versioning/">Semantic Versioning</a></h1>
+      <h1 class="entry-title">Semantic Versioning</h1>
     
     
       <p class="meta">
@@ -96,7 +93,7 @@ not make any sense out of it. Take package managers for instance; you &hellip;">
   </header>
 
 
-  <div class="entry-content"><p>Version numbering is a field on which you could talk for hours on end and still
+<div class="entry-content"><p>Version numbering is a field on which you could talk for hours on end and still
 not make any sense out of it. Take package managers for instance; you have a
 package foo, that depends on package bar - now if it was as simple as that, we&#8217;d
 have no problems. It&#8217;s more likely that you&#8217;d wind up with version x of foo
@@ -105,27 +102,60 @@ far, so good. Now, let&#8217;s update baz to version z1 - OOPS! There are some c
 to version z1 that break version y of bar, which means we need to revert to
 version z.</p>
 
+<!-- more -->
+
+
+<p>Now, as a human, it is possible to go through the changelog for each version and
+try to figure out if the changes in the new version will work. However, this is
+time consuming and error prone. A simpler way is to let the computer do this,
+but natural language processing is a hard problem. Instead, we depend on a
+specific version number scheme that emposes some semantics to ensure
+compatibility across releases. Enter <a href="http://semver.org">Semantic versioning</a>.
+This is a specification that packages can conforming to and it shifts the
+responsibility of the user to the developer to assure compatibility.</p>
+
+<p>As a developer, it does add a little bit of additional work, but the payoff is
+great. All you need to do is ensure that any change that affects backward
+compatibility is reflected in the major version number. Any changes that add
+functionality, but without affecting backward compatibility should show up in
+the minor version. And any bug fixes should show up in the patch version.</p>
+
+<p>This is also an excellent project to get my hands dirty on Ruby programming.
+Although I have experience with shell programming, Perl and a bit of Python, I
+never really thought of myself as a Ruby person, until now.</p>
+
+<p>This results in a gem I call the version manager library or VMLib. It comprises
+of a Ruby module with a Version class, that allows the user to compare different
+version numbers, and manage a projects version number. As of this writing, the
+VMLib package also has a wrapper script that allows you to apply semantic
+versioning to any software package. Check out <a href="http://github.com/nirenjan/vmlib">http://github.com/nirenjan/vmlib</a></p>
+
+<p>This project goes through different aspects of the Ruby language, including, but
+not limited to:</p>
+
+<ul>
+<li>Modules</li>
+<li>Classes</li>
+<li>Exceptions</li>
+<li>Regular expressions</li>
+<li>String manipulation</li>
+<li>RDoc documentation</li>
+</ul>
+
+
+<p>One simple method is to go through the code in the <code>lib/vmlib</code> folder, and since
+it is documented, it should give some decent examples of usage.</p>
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/06/29/semantic-versioning/">Read on &rarr;</a>
-    </footer>
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/09/stardates/">Stardates</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Nirenjan Krishnan</span></span>
+
+      
 
 
 
@@ -138,37 +168,38 @@ version z.</p>
 
 
 
-<time datetime="2013-02-09T19:41:00-08:00" pubdate data-updated="true">Stardate 56333.65</time>
-        
-      </p>
+<time datetime="2013-06-29T10:53:00-07:00" pubdate data-updated="true">Stardate 56473.25</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/code/'>Code</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nirenjan.github.com/blog/2013/06/29/semantic-versioning/" data-via="" data-counturl="http://nirenjan.github.com/blog/2013/06/29/semantic-versioning/" >Tweet</a>
+  
+  
+  
+</div>
 
-
-  <div class="entry-content"><p>Stardates are common usage in the Star Trek universe. You&#8217;d easily hear Captain
-Picard talking in the intro scene, &#8220;Captain&#8217;s log, stardate 41325.9&#8221;. These
-combinations of numbers are meant to give the viewer a sense of the future,
-without explicitly stating the exact timeframe in which the show occurs. Of
-course, we know that Star Trek: The Next Generation is set in the 24th century,
-but that&#8217;s beside the point.</p>
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/09/stardates/" title="Previous Post: Stardates">&laquo; Stardates</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/02/09/stardates/">Read on &rarr;</a>
-    </footer>
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -189,7 +220,7 @@ but that&#8217;s beside the point.</p>
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/nirenjan">@nirenjan</a> on GitHub
@@ -222,6 +253,7 @@ but that&#8217;s beside the point.</p>
 
   
 </aside>
+
 
     </div>
   </div>
