@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Semantic Versioning"
-date: 2013-06-29 10:5
+date: 2013-06-29 10:54
 comments: true
 categories: [Code, Ruby]
 ---
